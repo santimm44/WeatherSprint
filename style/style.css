@@ -17,15 +17,31 @@ body{
 
 .searchbar{
     border: white 1px solid;
+    border-radius: 1rem;
 
-    background-color: blue;
+    background-color: grey;
+    filter: drop-shadow(#000000);
+
     grid-row:2/3;
     grid-column: 2/9;
     margin: .5rem 0;
+
+    display: grid;
+    justify-content: center;
+}
+
+::placeholder{
+    color: black;
+}
+.input-field{
+    border: 0px;
+    background-color: #00000000;
 }
 
 .favorite{
     border: white 1px solid;
+    border-radius: 1rem;
+
 
     background-color: aquamarine;
 
