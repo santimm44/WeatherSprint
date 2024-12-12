@@ -46,9 +46,10 @@ let cardThreeDescription = document.getElementById("cardThreeDescription");
 let cardFourDescription = document.getElementById("cardFourDescription");
 let cardFiveDescription = document.getElementById("cardFiveDescription");
 
+let inputField = document.getElementById("inputField");
 
-async function weatherForecast(){
-      let apiData = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=imperial`);
+async function weatherForecast(searchCityName){
+      let apiData = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchCityName}&appid=${APIKEY}&units=imperial`);
       let returnedData = await apiData.json();
 
     cityName.innerText = returnedData.name;
@@ -63,8 +64,6 @@ async function weatherForecast(){
     cardThreeDay.innerText = `${days[dayOfTheWeek(3)]}`;
     cardFourDay.innerText = `${days[dayOfTheWeek(4)]}`;
     cardFiveDay.innerText =`${days[dayOfTheWeek(5)]}`;
-    
-    //cardOneIcon.src = `https://openweathermap.org/img/wn/${returnFiveDayData}@2x.png`
 }
 
 
@@ -79,9 +78,9 @@ function dayOfTheWeek(addedDay){
     return returnDay
 }
 
-async function fiveDayWeatherInformation(){
+async function fiveDayWeatherInformation(searchCityName){
 
-     let apiData = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=imperial`);
+     let apiData = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${searchCityName}&appid=${APIKEY}&units=imperial`);
      let returnedData = await apiData.json();
 
     let weatherLowTemp = [];
@@ -100,7 +99,6 @@ async function fiveDayWeatherInformation(){
         weatherLowTemp.push(weatherLowTempVar);
         weatherHighTemp.push(weatherHighTempVar);
         weatherIcon.push(returnedData.list[i].weather[0].icon);
-        //weatherdescription.push(weatherdescriptionVar);
         weatherdescription.push(returnedData.list[i].weather[0].description);
 
 
@@ -159,6 +157,15 @@ async function fiveDayWeatherInformation(){
 
     //cardOneIcon.src = `https://openweathermap.org/img/wn/@2x.png`;
 }
+
+inputField.addEventListener("keyup", function(event){
+    if(event.key === "Enter"){
+        //take the input value
+        weatherForecast(inputField.value);
+        fiveDayWeatherInformation(inputField.value);
+        // pass it to the weatherAPI
+    }
+})
 
 //fiveDayWeatherInformation()
 //weatherForecast();
