@@ -37,7 +37,7 @@ body{
     top: 100%;
     background-color: grey;
 }
-.magnifying-glass{
+.icon-small{
     width: 5%;
     height: 100%;
 }
@@ -103,6 +103,13 @@ body{
     height: 90%;
     fill: yellow;
 }
+.star-favorite{
+    fill: yellow;
+}
+.star-regular{
+    fill: yellow;
+}
+
 .main-box{
     background-color: #00000080;
 
