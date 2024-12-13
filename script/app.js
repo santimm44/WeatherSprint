@@ -44,6 +44,8 @@ let cardFiveDescription = document.getElementById("cardFiveDescription");
 let inputField = document.getElementById("inputField");
 let searchbar = document.getElementById("searchbar");
 
+let mainWeatherIcon = document.getElementById("mainWeatherIcon");
+
 async function weatherForecast(searchCityName) {
     let apiData = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchCityName}&appid=${APIKEY}&units=imperial`);
     let returnedData = await apiData.json();
@@ -51,9 +53,11 @@ async function weatherForecast(searchCityName) {
     cityName.innerText = returnedData.name;
     todaysDate.innerText = `${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getDate()}th, ${currentDate.getFullYear()}`;
     dayOfWeek.innerText = `${days[currentDate.getDay()]}`;
-    weatherChance.innerText = returnedData.weather[0].description;
-    lowTempToday.innerText = returnedData.main.temp_min; // not accurate. needs to be changed to the actual daily low
-    highTempToday.innerText = returnedData.main.temp_max; // not accurate. needs to be changed to the actual daily high
+    mainWeatherIcon.src = `https://openweathermap.org/img/wn/${returnedData.weather[0].icon}@2x.png`;
+    mainWeatherIcon.alt = returnedData.weather[0].description;
+    weatherChance.innerText = `${returnedData.main.temp}°F ${returnedData.weather[0].description}`;
+    lowTempToday.innerText = `${returnedData.main.temp_min}°F`; // not accurate. needs to be changed to the actual daily low
+    highTempToday.innerText = `${returnedData.main.temp_max}°F`; // not accurate. needs to be changed to the actual daily high
 
     let cityArray = getFromLocalStorage();
     if (cityArray.includes(cityName.innerText)) {
@@ -124,32 +128,32 @@ async function fiveDayWeatherInformation(searchCityName) {
         }
     }
     //Not in for loop
-    cardOneLowTemp.innerText = weatherLowTemp[0];
-    cardOneHighTemp.innerText = weatherHighTemp[0];
+    cardOneLowTemp.innerText =`${weatherLowTemp[0]}°F`;
+    cardOneHighTemp.innerText = `${weatherHighTemp[0]}°F`;
     cardOneIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[0]}@2x.png`;
     cardOneIcon.alt = weatherdescription[0];
     cardOneDescription.innerText = weatherdescription[0];
 
-    cardTwoLowTemp.innerText = weatherLowTemp[1];
-    cardTwoHighTemp.innerText = weatherHighTemp[1];
+    cardTwoLowTemp.innerText = `${weatherLowTemp[1]}°F`;
+    cardTwoHighTemp.innerText = `${weatherHighTemp[1]}°F`;
     cardTwoIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[1]}@2x.png`;
     cardTwoIcon.alt = weatherdescription[1];
     cardTwoDescription.innerText = weatherdescription[1];
 
-    cardThreeLowTemp.innerText = weatherLowTemp[2];
-    cardThreeHighTemp.innerText = weatherHighTemp[2];
+    cardThreeLowTemp.innerText = `${weatherLowTemp[2]}°F`;
+    cardThreeHighTemp.innerText = `${weatherHighTemp[2]}°F`;
     cardThreeIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[2]}@2x.png`;
     cardThreeIcon.alt = weatherdescription[2];
     cardThreeDescription.innerText = weatherdescription[2];
 
-    cardFourLowTemp.innerText = weatherLowTemp[3];
-    cardFourHighTemp.innerText = weatherHighTemp[3];
+    cardFourLowTemp.innerText = `${weatherLowTemp[3]}°F`;
+    cardFourHighTemp.innerText = `${weatherHighTemp[3]}°F`;
     cardFourIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[3]}@2x.png`;
     cardFourIcon.alt = weatherdescription[3];
     cardFourDescription.innerText = weatherdescription[3];
 
-    cardFiveLowTemp.innerText = weatherLowTemp[4];
-    cardFiveHighTemp.innerText = weatherHighTemp[4];
+    cardFiveLowTemp.innerText = `${weatherLowTemp[4]}°F`;
+    cardFiveHighTemp.innerText = `${weatherHighTemp[4]}°F`;
     cardFiveIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[4]}@2x.png`;
     cardFiveIcon.alt = weatherdescription[4];
     cardFiveDescription.innerText = weatherdescription[4];
@@ -164,12 +168,31 @@ inputField.addEventListener("keyup", function (event) {
     }
 })
 
-
+let elementsCreated = false;
+let hideCreatedElements = false;
 inputField.addEventListener("click", function () {
     //i want to create a dropdown when user clicks the search bar
     //drop down will populate the favorites of the user
 
-    createElements();
+    //if the user click on the search area then create element bool will become true
+    
+    
+    if(elementsCreated == false){
+        alert(elementsCreated);
+        createElements();
+        elementsCreated = true;
+        alert(elementsCreated);
+    }
+    else if(hideCreatedElements == false){
+        alert("1st else if:" + hideCreatedElements);
+        searchbar.classList.add("drop-down__hide-div");
+        hideCreatedElements = true;
+    }
+    else if(hideCreatedElements ==true ){
+        alert("2nd else if: " + hideCreatedElements)
+        searchbar.classList.remove("drop-down__hide-div");
+        hideCreatedElements = false;
+    }
 })
 
 favoriteDiv.addEventListener("click", function () {
@@ -241,27 +264,27 @@ function createElements() {
     })
 }
 
-navigator.geolocation.getCurrentPosition(success, errorFunct)
+// navigator.geolocation.getCurrentPosition(success, errorFunct)
 
-async function success(position){
+// async function success(position){
     
-    let lon = position.coords.longitude;
-    let lat = position.coords.latitude;
+//     let lon = position.coords.longitude;
+//     let lat = position.coords.latitude;
 
     
-    let fetchdata = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}`);
-    let apiData = await fetchdata.json();
+//     let fetchdata = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}`);
+//     let apiData = await fetchdata.json();
 
-    let retrievedCityName = apiData.name;
-    alert(retrievedCityName)
-    weatherForecast(retrievedCityName);
-    fiveDayWeatherInformation(retrievedCityName);
-}
+//     let retrievedCityName = apiData.name;
+//     alert(retrievedCityName)
+//     weatherForecast(retrievedCityName);
+//     fiveDayWeatherInformation(retrievedCityName);
+// }
 
-function errorFunct(){
-    //return a default, like the first city in storage
-    let favoriteList = getFromLocalStorage();
+// function errorFunct(){
+//     //return a default, like the first city in storage
+//     let favoriteList = getFromLocalStorage();
 
-    weatherForecast(favoriteList[0]);
-    fiveDayWeatherInformation(favoriteList[0]);
-}
+//     weatherForecast(favoriteList[0]);
+//     fiveDayWeatherInformation(favoriteList[0]);
+// }
