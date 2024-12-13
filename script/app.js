@@ -224,7 +224,6 @@ function createElements() {
     let favoriteList = getFromLocalStorage();
 
     favoriteList.map(cities => {
-        console.log(cities)
         let p = document.createElement("p");
         let div = document.createElement("div");
         div.className = "drop-down__create-div";
@@ -240,4 +239,29 @@ function createElements() {
             fiveDayWeatherInformation(p.innerText);
         })
     })
+}
+
+navigator.geolocation.getCurrentPosition(success, errorFunct)
+
+async function success(position){
+    
+    let lon = position.coords.longitude;
+    let lat = position.coords.latitude;
+
+    
+    let fetchdata = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}`);
+    let apiData = await fetchdata.json();
+
+    let retrievedCityName = apiData.name;
+    alert(retrievedCityName)
+    weatherForecast(retrievedCityName);
+    fiveDayWeatherInformation(retrievedCityName);
+}
+
+function errorFunct(){
+    //return a default, like the first city in storage
+    let favoriteList = getFromLocalStorage();
+
+    weatherForecast(favoriteList[0]);
+    fiveDayWeatherInformation(favoriteList[0]);
 }
