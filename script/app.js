@@ -54,9 +54,9 @@ async function weatherForecast(searchCityName) {
     dayOfWeek.innerText = `${days[currentDate.getDay()]}`;
     mainWeatherIcon.src = `https://openweathermap.org/img/wn/${returnedData.weather[0].icon}@2x.png`;
     mainWeatherIcon.alt = returnedData.weather[0].description;
-    weatherChance.innerText = `${returnedData.main.temp}°F ${returnedData.weather[0].description}`;
-    lowTempToday.innerText = `${returnedData.main.temp_min}°F`; // not accurate. needs to be changed to the actual daily low
-    highTempToday.innerText = `${returnedData.main.temp_max}°F`; // not accurate. needs to be changed to the actual daily high
+    weatherChance.innerText = `${Math.round(returnedData.main.temp)}°F ${returnedData.weather[0].description}`;
+    lowTempToday.innerText = `${Math.round(returnedData.main.temp_min)}°F`; // not accurate. needs to be changed to the actual daily low
+    highTempToday.innerText = `${Math.round(returnedData.main.temp_max)}°F`; // not accurate. needs to be changed to the actual daily high
 
     let cityArray = getFromLocalStorage();
     if (cityArray.includes(cityName.innerText)) {
@@ -122,32 +122,32 @@ async function fiveDayWeatherInformation(searchCityName) {
         }
     }
     //Not in for loop
-    cardOneLowTemp.innerText = `${weatherLowTemp[0]}°F`;
-    cardOneHighTemp.innerText = `${weatherHighTemp[0]}°F`;
+    cardOneLowTemp.innerText = `${Math.round(weatherLowTemp[0])}°F`;
+    cardOneHighTemp.innerText = `${Math.round(weatherHighTemp[0])}°F`;
     cardOneIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[0]}@2x.png`;
     cardOneIcon.alt = weatherdescription[0];
     cardOneDescription.innerText = weatherdescription[0];
 
-    cardTwoLowTemp.innerText = `${weatherLowTemp[1]}°F`;
-    cardTwoHighTemp.innerText = `${weatherHighTemp[1]}°F`;
+    cardTwoLowTemp.innerText = `${Math.round(weatherLowTemp[1])}°F`;
+    cardTwoHighTemp.innerText = `${Math.round(weatherHighTemp[1])}°F`;
     cardTwoIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[1]}@2x.png`;
     cardTwoIcon.alt = weatherdescription[1];
     cardTwoDescription.innerText = weatherdescription[1];
 
-    cardThreeLowTemp.innerText = `${weatherLowTemp[2]}°F`;
-    cardThreeHighTemp.innerText = `${weatherHighTemp[2]}°F`;
+    cardThreeLowTemp.innerText = `${Math.round(weatherLowTemp[2])}°F`;
+    cardThreeHighTemp.innerText = `${Math.round(weatherHighTemp[2])}°F`;
     cardThreeIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[2]}@2x.png`;
     cardThreeIcon.alt = weatherdescription[2];
     cardThreeDescription.innerText = weatherdescription[2];
 
-    cardFourLowTemp.innerText = `${weatherLowTemp[3]}°F`;
-    cardFourHighTemp.innerText = `${weatherHighTemp[3]}°F`;
+    cardFourLowTemp.innerText = `${Math.round(weatherLowTemp[3])}°F`;
+    cardFourHighTemp.innerText = `${Math.round(weatherHighTemp[3])}°F`;
     cardFourIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[3]}@2x.png`;
     cardFourIcon.alt = weatherdescription[3];
     cardFourDescription.innerText = weatherdescription[3];
 
-    cardFiveLowTemp.innerText = `${weatherLowTemp[4]}°F`;
-    cardFiveHighTemp.innerText = `${weatherHighTemp[4]}°F`;
+    cardFiveLowTemp.innerText = `${Math.round(weatherLowTemp[4])}°F`;
+    cardFiveHighTemp.innerText = `${Math.round(weatherHighTemp[4])}°F`;
     cardFiveIcon.src = `https://openweathermap.org/img/wn/${weatherIcon[4]}@2x.png`;
     cardFiveIcon.alt = weatherdescription[4];
     cardFiveDescription.innerText = weatherdescription[4];
